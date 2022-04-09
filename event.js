@@ -34,3 +34,5 @@ myEvent.removeListener('event5', listener);
 myEvent.emit('event5'); // 실행 안 됨
 
 console.log(myEvent.listenerCount('event2'));
+
+// 잘쓰면 효율적이고 좋다
