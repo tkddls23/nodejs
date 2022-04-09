@@ -8,4 +8,4 @@ writeStream.on('finish', ()=>{
 
 writeStream.write('이 글을 씁니다.\n'); //하나의 버퍼
 writeStream.write('한 번 더 씁니다.'); //하나의 버퍼
-writeStream.end(); //쓰기끝 
+writeStream.end(); //쓰기 끝 
