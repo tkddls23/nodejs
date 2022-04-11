@@ -5,7 +5,7 @@ const session = require('express-session');
 const dotenv = require('dotenv');
 const path = require('path');
 
-dotenv.config();
+dotenv.config(); // 최대한 위에다가 써주자 
 const app = express();
 app.set('port', process.env.PORT || 3001);
 
