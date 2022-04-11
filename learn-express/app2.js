@@ -46,23 +46,28 @@ try {
   console.error('uploads 폴더가 없어 uploads 폴더를 생성합니다.');
   fs.mkdirSync('uploads');
 }
-const upload = multer({
-  storage: multer.diskStorage({
-    destination(req, file, done) {
+const upload = multer({ // 보통 storage limits 옵션
+  storage: multer.diskStorage({ // storage - 업로드한 파일을 어디에 저장할지
+    destination(req, file, done) {// 어디다 저장할지
       done(null, 'uploads/');
     },
-    filename(req, file, done) {
-      const ext = path.extname(file.originalname);
-      done(null, path.basename(file.originalname, ext) + Date.now() + ext);
+    filename(req, file, done) {// 어떤이름으로 올릴지
+      const ext = path.extname(file.originalname);//
+      done(null, path.basename(file.originalname, ext) + Date.now() + ext); //날짜 확장자 여러사람이 같은 파일을 올릴때 덮어씌우는거 방지위해서
     },
   }),
-  limits: { fileSize: 5 * 1024 * 1024 },
-});
+  limits: { fileSize: 5 * 1024 * 1024 }, // 파일사이즈, 개수 등 다양한 옵션있음
+}); // 어디에 어떻게 어떤이름으로 파일을 업로드할지
+
+
 app.get('/upload', (req, res) => {
   res.sendFile(path.join(__dirname, 'multipart.html'));
 });
-app.post('/upload', upload.single('image'), (req, res) => {
-  console.log(req.file);
+app.post('/upload', upload.single('image'), (req, res) => { // 한개에 파일만 업로드할때
+  // 여러개 multiple 를 받을경우 upload.array로 해야한다 
+  // 여러개를(file이 여러개인경우) fields 를 받을경우 array가 아니라 upload.fields([{name:'image1'},{name:'image2'},{name:'image3'}])
+  // input type file의 name과 upload.single() 과 일치해야댐 
+  console.log(req.file); // 업로드에 대한 정보 출력 여러개면 files files인경우에는 files.image1 이런식으로 하면댐
   res.send('ok');
 });
 
