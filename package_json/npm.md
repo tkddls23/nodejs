@@ -63,3 +63,16 @@
 # => SemVer - 유의적 버저닝 방식이라한다
 
 - Major(주 버전 - 대대적 수정) Minor(부 버전 - 기존코드에서 안심수정) Patch(수 버전 - 마이너한 버그 수정)
+
+# 다양한 npm 명령어들
+
+# npm outdated - 어떤 패기지에 기능 변화가 생겼는지 알수있다
+# npm uninstall 패키지명 or npm rm 패키지명 - remove package
+# npm search 검색어 - npm package search (npmjs.com에서도 가능)
+# npm info 패키지명 - package detail
+# npm adduser - npmjs login
+# npm login - npmjs login
+# npm whoami - 로그인누가 했는지
+# npm publish - publish package
+# npm unpublish - unpublish package (whithin 72hours)
+ - 다른 유저가 내 패키지를 사용중에 배포가 중단되면 문제가 생기기 때문
