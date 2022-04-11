@@ -1,11 +1,11 @@
 const express = require('express');
-
+const path = require('path');
 const app = express();
 
 app.set('port',3000); //server에 변수를 심는다
 //port라는 변수에 3000을 넣는다
 app.get('/',(req,res)=>{
-    res.send('hello express?');
+    res.sendFile(path.join(__dirname,'./index.html')); // sendFile쓰면 알아서 읽어줌
 }); //if문으로 도배할 이유가 없다이제
 
 app.get('/about',(req,res)=>{
