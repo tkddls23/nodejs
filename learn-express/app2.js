@@ -11,6 +11,7 @@ app.set('port', process.env.PORT || 3001);
 
 app.use(morgan('dev')); // 요청 기록이 나온다
 // 개발시 dev 실제 combined - ip 브라우저 시간 등 자세하게 나옴
+
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,15 +25,16 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser(process.env.COOKIE_SECRET));
 // cookie파싱하기 엄청 귀찮은데 알아서 다해줌
+
 app.use(session({
-  resave: false,
-  saveUninitialized: false,
-  secret: process.env.COOKIE_SECRET,
+  resave: false,  // 요청이 왔을때 세션에 수정사항이 생기지않아도 다시 저장할지 여부
+  saveUninitialized: false, // 세션에 저장할 내역이 없더라도 세션을 저장할지
+  secret: process.env.COOKIE_SECRET, // cookie secret과 비슷
   cookie: {
-    httpOnly: true,
+    httpOnly: true, // js 공격 방지
     secure: false,
   },
-  name: 'session-cookie',
+  name: 'session-cookie', //기본값은 connect.sid
 }));
 
 const multer = require('multer');
@@ -78,3 +80,21 @@ app.use((err, req, res, next) => {
 app.listen(app.get('port'), () => {
   console.log(app.get('port'), '번 포트에서 대기 중');
 });
+
+
+//알아두면 매우 편한 식
+//로그인한사람만 보여주고싶은경우
+
+// --> 미들웨어 확장법
+// app.use('/',(req,res,next)=> {
+//   express.static(__dirname,'public')(req,res,next)
+// });
+
+// 로그인시에만 보여주는방식
+// app.use('/',(req,res,next)=> {
+//   if (req.session.id) {
+//     express.static(__dirname,'public')(req,res,next)
+//   }
+//   else{
+//     next();
+//   }});
