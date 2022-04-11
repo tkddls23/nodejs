@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 // 위 두줄 넣으면 알아서 파싱해주기때문에 req.body.name을 그냥 쓰면댄다
 //json - 클라에서 json data를 보냈을때 json을 파싱
 // urlencoded - 클라에서 form을 보낼때
-//extende - form 파싱시 querystring을 어떻게 할지
+//extended - form 파싱시 querystring을 어떻게 할지
 // true는 qs모듈 false는 querystring true추천함 더빨라서
 //다만 form에서 이미지나 파일을 보내는경우 urlencode로는 안됨
 //이런경우는 멀터 써야댐
