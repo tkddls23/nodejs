@@ -55,8 +55,12 @@ app.listen(app.get('port'),() => {
 //-> 그후 error middleware를 넣어줌
 
 
-// 자주하는 실수 - 한 라우터안에서 res.send or res.sendFile
+// 자주하는 실수 - 1. 한 라우터안에서 res.send or res.sendFile
 // 두번하는거 or res.json을 같이한다던가
 // or res.writeHead()를 같이한다던가
 //res로 응답을끝냈는데 또 res로응답을 하려해서 생기는 문제
 // => cannot set headers after they are sent to the client error발생
+
+
+//2. res.json 다음 console.log
+//res.json은 return이아니다 따라서 res.json이후 console.log적어놓으면 그것도 실행됨
