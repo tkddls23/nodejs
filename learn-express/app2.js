@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 //extended - form 파싱시 querystring을 어떻게 할지
 // true는 qs모듈 false는 querystring true추천함 더빨라서
 //다만 form에서 이미지나 파일을 보내는경우 urlencode로는 안됨
-//이런경우는 멀터 써야댐
+//이런경우는 multer 써야댐
 
 app.use(cookieParser(process.env.COOKIE_SECRET));
 // cookie파싱하기 엄청 귀찮은데 알아서 다해줌
