@@ -12,6 +12,17 @@ app.set('port', process.env.PORT || 3001);
 app.use(morgan('dev')); // 요청 기록이 나온다
 // 개발시 dev 실제 combined - ip 브라우저 시간 등 자세하게 나옴
 app.use('/', express.static(path.join(__dirname, 'public')));
+// app.use(요청경로,express.static(path.join(__dirname,실제경로))); 라고 생각하면된다
+// 정적파일 제공
+// 보안에 좋음
+// middle웨어간 순서가 중요
+// 모든 middle웨어들은 next를 실행하는데 static은 실행안함
+// 그래서 page를 찾으면 stop
+// 사진만 전송하면되는데 cookie도 파싱하고 session도 파싱하면 낭비
+// 따라서 보통 static은 두번째에 놔둔다
+// 쿠키파서와 세션이 static보다 위에있는경우 - 로그인한 유저만 정적파일을 제공할때
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // 위 두줄 넣으면 알아서 파싱해주기때문에 req.body.name을 그냥 쓰면댄다
@@ -19,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 // urlencoded - 클라에서 form을 보낼때
 //extended - form 파싱시 querystring을 어떻게 할지
 // true는 qs모듈 false는 querystring true추천함 더빨라서
-//다만 form에서 이미지나 파일을 보내는경우 urlencode로는 안됨
+//다만 form에서 이미지나 파일을 보내는경우 urlencoded로는 안됨
 //이런경우는 multer 써야댐
 
 app.use(cookieParser(process.env.COOKIE_SECRET));
