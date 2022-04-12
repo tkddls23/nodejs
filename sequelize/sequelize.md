@@ -4,3 +4,4 @@ npm i express morgan nunjucks sequlize sequelize-cli mysql2
 
 # npx sequelize init - 시퀄라이즈 구조생성
 
+# npx sequelize db:create -db 생성
