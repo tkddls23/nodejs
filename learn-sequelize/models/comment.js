@@ -25,5 +25,7 @@ module.exports = class Comment extends Sequelize.Model {
 
   static associate(db) {
     db.Comment.belongsTo(db.User, { foreignKey: 'commenter', targetKey: 'id' });
+    //commenter 칼럼이 추가됨
+    //cascade 추가할수는 있음
   }
 };

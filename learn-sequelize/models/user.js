@@ -38,6 +38,6 @@ module.exports = class User extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.User.hasMany(db.Comment, { foreignKey: 'commenter', sourceKey: 'id' });
+    db.User.hasMany(db.Comment, { foreignKey: 'commenter', sourceKey: 'id' }); // commenter라는 컬럼이 내(user의) id를 참조하고있다는 뜻
   }
 };
