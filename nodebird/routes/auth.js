@@ -7,8 +7,8 @@ const User = require('../models/user');
 const router = express.Router();
 
 //회원가입
-
-router.post('/join', isNotLoggedIn, async (req, res, next) => {
+// isNotloggedin = 이미 로그인사람이 회원가입하는것을 방지하기위해
+router.post('/join', isNotLoggedIn, async (req, res, next) => { //login안한 상태에만 실행
   const { email, nick, password } = req.body;
   try {
     const exUser = await User.findOne({ where: { email } }); //해당 email로 이미 가입한 사람이 있는가
@@ -39,7 +39,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
     if (!user) { //login 실패시
       return res.redirect(`/?loginError=${info.message}`);
     }
-    return req.login(user, (loginError) => { //login시 user객체를 넣어 passport의 index.js로 간다
+    return req.login(user, (loginError) => { //login시 user객체를 넣어 passport의 index.js로 간다 - serializeUser로
       if (loginError) { //error 발생시
         console.error(loginError);
         return next(loginError);
@@ -49,13 +49,13 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
   })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
 });
 
-router.get('/logout', isLoggedIn, (req, res) => {
+router.get('/logout', isLoggedIn, (req, res) => { //login시에만
   req.logout(); //session에서 정보를 지운다
   req.session.destroy();
   res.redirect('/');
 });
 
-router.get('/kakao', passport.authenticate('kakao'));
+router.get('/kakao', passport.authenticate('kakao')); //kakaostrategy로
 
 router.get('/kakao/callback', passport.authenticate('kakao', {
   failureRedirect: '/',

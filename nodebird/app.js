@@ -5,11 +5,13 @@ const path = require('path');
 const session = require('express-session');
 const nunjucks = require('nunjucks');
 const dotenv = require('dotenv');
+const passport = require('passport');
 
 dotenv.config(); // 최대한 위에 써준다!! .env의 설정값들이 들어가기 때문
 const pageRouter = require('./routes/page'); //page router
 const authRouter = require('./routes/auth'); //auth router
 const { sequelize } = require('./models');
+const passportConfig = require('./passport');
 
 const app = express();
 app.set('port', process.env.PORT || 8001); //개발시와 배포시 다르게 port를 쓰기위해서
@@ -27,6 +29,7 @@ sequelize.sync({force: false}) //model 수정시만  true만 실무에서는 wor
     .catch((err)=>{
         console.error(err);
     });
+passportConfig();
 
 app.use(morgan('dev')); // 개발시 dev 실제 combined - ip 브라우저 시간 등 자세하게 나옴
 app.use(express.static(path.join(__dirname, 'public')));  //정적파일 제공
@@ -42,6 +45,11 @@ app.use(session({
     secure: false,
     },
 }));
+
+//위 express session보다는 아래에 위치해야한다 = session에서 저장하기때문
+app.use(passport.initialize());
+app.use(passport.session()); //login후 요청시
+//router 가기전 두개 연결해줘야한다 and 
 
 app.use('/', pageRouter);
 app.use('/auth', authRouter);

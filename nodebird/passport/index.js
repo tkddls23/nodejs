@@ -10,9 +10,9 @@ module.exports = () => {
     //성공시 다시 auth로
   });
 
-  passport.deserializeUser((id, done) => {
+  passport.deserializeUser((id, done) => { //login한 후 요청이 있을때
     User.findOne({ where: { id } })
-      .then(user => done(null, user))
+      .then(user => done(null, user)) // req.user
       .catch(err => done(err));
   });
 
