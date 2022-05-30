@@ -34,7 +34,7 @@ passportConfig();
 app.use(morgan('dev')); // 개발시 dev 실제 combined - ip 브라우저 시간 등 자세하게 나옴
 app.use(express.static(path.join(__dirname, 'public')));  //정적파일 제공
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false })); //urlencoded로 보내는경우 여기서 해석함 req.body.email 머 이런식으로
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(session({
     resave: false,
